@@ -5,5 +5,17 @@
   </head>
   <body>
     <h2 th:text="${'Welcome to my Thymeleaf Enabled HTML file'}">Welcome to my HTML file</h2>
+    <div th:text="|${message}: Text from Thymeleaf inserted into our div|">
+      Text inside of the div that will be replaced by Thymeleaf when we are running in a server environment.
+    </div>
+    
+    <h2>Example Car Brands</h2>
+    
+    <!-- 
+      for (String car : cars)
+     -->
+    <ul>
+      <li th:each="car : ${cars}" th:text="${car}">Mercedes</li>
+    </ul>
   </body>
 </html>
