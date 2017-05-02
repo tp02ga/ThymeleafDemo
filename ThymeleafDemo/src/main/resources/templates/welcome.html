@@ -15,7 +15,22 @@
       for (String car : cars)
      -->
     <ul>
-      <li th:each="car : ${cars}" th:text="${car}">Mercedes</li>
+      <li th:each="carBrand : ${cars}" th:text="${carBrand}">Mercedes</li>
     </ul>
+    
+    <form action="" method="post" th:object="${car}">
+      <input type="number" th:field="*{year}"/>
+      <br/><br/>
+      <select th:field="*{brand}">
+        <option value=""></option>
+        <option th:each="carBrand : ${cars}" th:value="${carBrand}" th:text="${carBrand}">Mercedes</option>
+      </select>
+      <br/><br/>
+      <input type="radio" th:field="*{fuelType}" value="Deisel"/><label for="fuelType1">Deisel</label> 
+      <input type="radio" th:field="*{fuelType}" value="Gas"/><label for="fuelType2">Gas</label> 
+      <input type="radio" th:field="*{fuelType}" value="Electric"/><label for="fuelType3">Electric</label> 
+      <br/><br/>
+      <input type="submit"/>
+    </form>
   </body>
 </html>
