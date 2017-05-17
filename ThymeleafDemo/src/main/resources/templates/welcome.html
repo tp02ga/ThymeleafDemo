@@ -15,7 +15,7 @@
       for (String car : cars)
      -->
     <ul>
-      <li th:each="carBrand : ${cars}" th:text="${carBrand}">Mercedes</li>
+      <li th:each="carBrand : ${cars}" th:inline="text">[[${carBrand}]] <a th:href="@{/del/{brand}(brand=${carBrand})}">del</a></li>
     </ul>
     
     <form action="" method="post" th:object="${car}">
