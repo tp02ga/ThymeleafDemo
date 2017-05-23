@@ -2,6 +2,19 @@
 <html xmlns:th="http://thymeleaf.org">
   <head>
     <title>Welcome</title>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+      var carBrands = [[${cars}]];
+      var numberOfCarBrands = carBrands.length;
+      console.log("Number of cars brands is: " + numberOfCarBrands);
+      
+      if (numberOfCarBrands < 5)
+      {
+    	  console.log("we must have removed a car brand from the list.");
+      }
+      
+    /*]]>*/
+    </script>
   </head>
   <body>
     <h2 th:text="${'Welcome to my Thymeleaf Enabled HTML file'}">Welcome to my HTML file</h2>
