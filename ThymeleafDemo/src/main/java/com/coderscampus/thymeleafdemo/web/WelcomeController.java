@@ -1,6 +1,7 @@
 package com.coderscampus.thymeleafdemo.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,8 @@ public class WelcomeController
   {
     model.put("message", "This message comes to you from our Welcome Controller");
     model.put("cars", cars);
+    model.put("today", new Date());
+    model.put("money", 1654522.53);
     
     Car car = new Car();
     

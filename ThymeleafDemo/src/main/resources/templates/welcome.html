@@ -4,13 +4,13 @@
     <title>Welcome</title>
     <script th:inline="javascript">
     /*<![CDATA[*/
-      var carBrands = [[${cars}]];
-      var numberOfCarBrands = carBrands.length;
+      var numberOfCarBrands = [[${#arrays.length(cars)}]];
+      
       console.log("Number of cars brands is: " + numberOfCarBrands);
       
       if (numberOfCarBrands < 5)
       {
-    	  console.log("we must have removed a car brand from the list.");
+    	console.log("we must have removed a car brand from the list.");
       }
       
     /*]]>*/
@@ -22,6 +22,10 @@
       Text inside of the div that will be replaced by Thymeleaf when we are running in a server environment.
     </div>
     
+    <div th:inline="text">Today's date is: [[${#dates.format(today, 'MMM dd, yyyy h:mm a')}]]</div>
+    
+    <div th:text="|Cost: ${#numbers.formatDecimal(money, 1, 'COMMA', 2, 'POINT')}|"></div>
+    
     <h2>Example Car Brands</h2>
     
     <!-- 
@@ -30,6 +34,9 @@
     <ul>
       <li th:each="carBrand : ${cars}" th:inline="text">[[${carBrand}]] <a th:href="@{/del/{brand}(brand=${carBrand})}">del</a></li>
     </ul>
+    <div th:if="${#lists.isEmpty(cars)}">
+      There are no car brands on the model.
+    </div>
     
     <form action="" method="post" th:object="${car}">
       <input type="number" th:field="*{year}"/>
