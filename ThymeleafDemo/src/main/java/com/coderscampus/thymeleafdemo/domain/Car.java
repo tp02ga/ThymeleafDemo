@@ -1,11 +1,22 @@
 package com.coderscampus.thymeleafdemo.domain;
 
-public class Car
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Car implements Comparable<Car>
 {
   private String brand;
-  private Integer year;
-  private String fuelType;
+  private List<Model> models = new ArrayList<>();
   
+  public List<Model> getModels()
+  {
+    return models;
+  }
+  public void setModels(List<Model> models)
+  {
+    this.models = models;
+  }
   public String getBrand()
   {
     return brand;
@@ -14,26 +25,40 @@ public class Car
   {
     this.brand = brand;
   }
-  public Integer getYear()
-  {
-    return year;
-  }
-  public void setYear(Integer year)
-  {
-    this.year = year;
-  }
-  public String getFuelType()
-  {
-    return fuelType;
-  }
-  public void setFuelType(String fuelType)
-  {
-    this.fuelType = fuelType;
-  }
   @Override
   public String toString()
   {
-    return "Car [brand=" + brand + ", year=" + year + ", fuelType=" + fuelType
-        + "]";
+    return "Car [brand=" + brand + ", models=" + Arrays.toString(models.toArray()) + "]";
+  }
+  @Override
+  public int compareTo(Car o)
+  {
+    return this.getBrand().compareTo(o.getBrand());
+  }
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((brand == null) ? 0 : brand.hashCode());
+    return result;
+  }
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Car other = (Car) obj;
+    if (brand == null)
+    {
+      if (other.brand != null)
+        return false;
+    } else if (!brand.equals(other.brand))
+      return false;
+    return true;
   }
 }

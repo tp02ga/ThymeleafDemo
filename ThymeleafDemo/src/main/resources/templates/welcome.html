@@ -4,7 +4,7 @@
     <title>Welcome</title>
     <script th:inline="javascript">
     /*<![CDATA[*/
-      var numberOfCarBrands = [[${#arrays.length(cars)}]];
+      var numberOfCarBrands = [[${#arrays.length(carBrands)}]];
       
       console.log("Number of cars brands is: " + numberOfCarBrands);
       
@@ -28,29 +28,38 @@
     
     <h2>Example Car Brands</h2>
     
-    <!-- 
-      for (String car : cars)
-     -->
     <ul>
-      <li th:each="carBrand : ${cars}" th:inline="text">[[${carBrand}]] <a th:href="@{/del/{brand}(brand=${carBrand})}">del</a></li>
+      <li th:each="car : ${cars}" th:inline="text">
+        [[${car.brand}]] <a th:href="@{/?carBrand={brand}(brand=${car.brand})}" style="margin-left: 0.5em; margin-right: 0.5em;">edit</a> <a th:href="@{/del/{brand}(brand=${car.brand})}">del</a>
+        <ul>
+          <li th:each="carModel : ${car.models}" th:text="${carModel}"></li>
+        </ul>
+      </li>
     </ul>
     <div th:if="${#lists.isEmpty(cars)}">
       There are no car brands on the model.
     </div>
+    <br/>
     
     <form action="" method="post" th:object="${car}">
-      <input type="number" th:field="*{year}"/>
-      <br/><br/>
       <select th:field="*{brand}">
         <option value=""></option>
-        <option th:each="carBrand : ${cars}" th:value="${carBrand}" th:text="${carBrand}">Mercedes</option>
+        <option th:each="carBrand : ${carBrands}" th:value="${carBrand}" th:text="${carBrand}"></option>
       </select>
-      <br/><br/>
-      <input type="radio" th:field="*{fuelType}" value="Deisel"/><label for="fuelType1">Deisel</label> 
-      <input type="radio" th:field="*{fuelType}" value="Gas"/><label for="fuelType2">Gas</label> 
-      <input type="radio" th:field="*{fuelType}" value="Electric"/><label for="fuelType3">Electric</label> 
-      <br/><br/>
-      <input type="submit"/>
+      <br/>
+      <div th:each="carModel, status : ${car.models}">
+        Model Name: <input type="text" th:field="*{models[__${status.index}__].name}"/>
+        <br/>
+        Year: <input type="number" th:field="*{models[__${status.index}__].year}"/>
+        <br/>
+        <fieldset>
+          <legend>Fuel Type</legend>
+          <input type="radio" name="fuelType" th:field="*{models[__${status.index}__].fuelType}" value="gas"/> Gas<br/>
+          <input type="radio" name="fuelType" th:field="*{models[__${status.index}__].fuelType}" value="deisel"/> Deisel<br/>
+          <input type="radio" name="fuelType" th:field="*{models[__${status.index}__].fuelType}" value="electric"/> Electric<br/>
+        </fieldset>
+      </div>
+      <input type="submit" value="Submit"/>
     </form>
   </body>
 </html>
